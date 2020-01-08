@@ -13,7 +13,8 @@ open class ToastView: UIView {
     get { return self.textLabel.attributedText }
     set { self.textLabel.attributedText = newValue }
   }
-  
+
+  open var didTap: (() -> Void)?
 
   // MARK: Appearance
 
@@ -147,7 +148,9 @@ open class ToastView: UIView {
 
   public init() {
     super.init(frame: .zero)
-    self.isUserInteractionEnabled = false
+    self.isUserInteractionEnabled = true
+    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapGesture))
+    addGestureRecognizer(tapRecognizer)
     self.addSubview(self.backgroundView)
     self.addSubview(self.textLabel)
   }
@@ -219,6 +222,13 @@ open class ToastView: UIView {
       }
     }
     return nil
+  }
+
+  // MARK: Actions
+
+  @objc
+  func didTapGesture() {
+      didTap?()
   }
 
 }

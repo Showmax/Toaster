@@ -77,7 +77,7 @@ open class ToastWindow: UIWindow {
   public init(frame: CGRect, mainWindow: UIWindow?) {
     super.init(frame: frame)
     self.mainWindow = mainWindow
-    self.isUserInteractionEnabled = false
+    self.isUserInteractionEnabled = true
     self.gestureRecognizers = nil
     #if swift(>=4.2)
     self.windowLevel = .init(rawValue: .greatestFiniteMagnitude)
@@ -222,6 +222,14 @@ open class ToastWindow: UIWindow {
       return window
     }
     return nil
+  }
+
+  open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+      let view = super.hitTest(point, with: event)
+      if view == self {
+          return nil
+      }
+      return view
   }
   
 }

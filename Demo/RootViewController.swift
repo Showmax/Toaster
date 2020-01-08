@@ -57,6 +57,13 @@ final class RootViewController: UIViewController {
   }
 
   @objc dynamic func showButtonTouchUpInside() {
+    let tappableToast = Toast(text: "Tappable toast")
+    tappableToast.view.didTap = {
+      let alert = UIAlertController(title: "Tapped on toast", message: nil, preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+      self.present(alert, animated: true)
+    }
+    tappableToast.show()
     Toast(text: "Basic Toast").show()
     Toast(attributedText: NSAttributedString(string: "AttributedString Toast", attributes: [NSAttributedString.Key.backgroundColor: UIColor.yellow])).show()
     Toast(text: "You can set duration. `Delay.short` means 2 seconds.\n" +
